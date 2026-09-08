@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Vercel's build environment sets VERCEL=1; target its Nitro preset there so
+  // the build emits .vercel/output instead of the Cloudflare Worker format
+  // Lovable's own sandbox forces. Leaves local/Lovable builds untouched.
+  ...(process.env["VERCEL"] ? { nitro: { preset: "vercel" } } : {}),
 });
